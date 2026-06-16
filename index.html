@@ -22,14 +22,14 @@ body {
     background-size: 20px 20px;
     color: #0f172a;
     min-height: 100vh;
-    padding: 60px 20px 40px; /* Added top padding to accommodate loader */
+    padding: 60px 20px 40px; /* Top padding to accommodate loader */
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 /* --------------------------------------
-   TOP LOADING BANNER (NEW)
+   TOP LOADING BANNER
 --------------------------------------- */
 #topLoader {
     position: fixed;
@@ -170,6 +170,9 @@ td:first-child {
     gap: 12px;
 }
 
+/* --------------------------------------
+   HIGH-CONTRAST CHECKBOXES
+--------------------------------------- */
 input[type=checkbox] {
     appearance: none;
     width: 26px;
@@ -203,6 +206,7 @@ input[type=checkbox]:checked:after {
     font-size: 16px;
 }
 
+/* Calendar Icon */
 .date-icon {
     display: none;
     cursor: pointer;
@@ -296,7 +300,7 @@ input[type=checkbox]:checked + .date-icon {
 </head>
 <body>
 
-<!-- NEW SYSTEM LOADER -->
+<!-- SYSTEM LOADER -->
 <div id="topLoader">
     <div class="spinner"></div>
     <span id="loaderText">Loading Database...</span>
@@ -406,7 +410,7 @@ function setLoader(state, text = "") {
 setLoader("show", "Connecting to Database...");
 
 // --- Task Saving Logic ---
-let iframeLoadCount = 0; // Tracks form submissions
+let isSubmitting = false; // Safely track if we are actually syncing
 
 function saveTask(box, task, month){
     const elementId = task + "_" + month;
@@ -428,25 +432,36 @@ function saveTask(box, task, month){
     }
 
     // Trigger Loading UI
+    isSubmitting = true;
     setLoader("show", "Syncing Update...");
     document.getElementById("sheetForm").submit();
+
+    // FAILSAFE: If the browser blocks the iframe onload event, close it after 2.5 seconds anyway
+    setTimeout(() => {
+        if (isSubmitting) {
+            completeSync();
+        }
+    }, 2500);
 }
 
 // --- Iframe Completion Trigger ---
 function handleIframeLoad() {
-    iframeLoadCount++;
-    // We ignore the very first load because empty iframes trigger onload instantly on page load
-    if (iframeLoadCount > 1) {
-        setLoader("hide"); // Hide the drop-down loader
-        
-        const statusDiv = document.getElementById("status");
-        statusDiv.innerHTML = "✓ Securely Synced to Database";
-        statusDiv.style.opacity = 1;
-        
-        setTimeout(() => {
-            statusDiv.innerHTML = "";
-        }, 3000);
+    if (isSubmitting) {
+        completeSync();
     }
+}
+
+function completeSync() {
+    isSubmitting = false;
+    setLoader("hide"); // Hide the drop-down loader
+    
+    const statusDiv = document.getElementById("status");
+    statusDiv.innerHTML = "✓ Securely Synced to Database";
+    statusDiv.style.opacity = 1;
+    
+    setTimeout(() => {
+        statusDiv.innerHTML = "";
+    }, 3000);
 }
 
 // --- Data Loading Logic ---
