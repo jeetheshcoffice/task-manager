@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task Manager Month Wise</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Segoe UI, Arial, sans-serif;
+}
+
+body{
+    background:#f4f7fb;
+    padding:30px;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+    overflow:hidden;
+}
+
+.title{
+    background:#0d6efd;
+    color:white;
+    text-align:center;
+    padding:18px;
+    font-size:28px;
+    font-weight:bold;
+    letter-spacing:1px;
+}
+
+.table-container{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#1ecad3;
+    color:#000;
+    font-size:18px;
+    padding:12px;
+    border:1px solid #cfd8dc;
+}
+
+td{
+    padding:12px;
+    text-align:center;
+    border:1px solid #cfd8dc;
+}
+
+td:first-child{
+    text-align:left;
+    font-weight:600;
+}
+
+tr:nth-child(even){
+    background:#fafafa;
+}
+
+input[type="checkbox"]{
+    width:22px;
+    height:22px;
+    cursor:pointer;
+}
+
+.status{
+    padding:15px;
+    text-align:center;
+    color:green;
+    font-weight:bold;
+}
+
+.footer{
+    text-align:center;
+    padding:12px;
+    color:#666;
+    font-size:14px;
+}
+
+@media(max-width:768px){
+
+    th{
+        font-size:14px;
+    }
+
+    td{
+        padding:8px;
+    }
+
+    .title{
+        font-size:22px;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<div class="title">
+TASK MANAGER MONTH WISE
+</div>
+
+<div class="table-container">
+
+<table>
+
+<thead>
+<tr>
+<th>TASK</th>
+<th>JUNE</th>
+<th>JULY</th>
+<th>AUGUST</th>
+<th>SEPTEMBER</th>
+<th>OCTOBER</th>
+<th>NOVEMBER</th>
+<th>DECEMBER</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>NPS</td>
+<td><input type="checkbox" onchange="saveTask(this,'NPS','JUNE')"></td>
+<td><input type="checkbox" onchange="saveTask(this,'NPS','JULY')"></td>
+<td><input type="checkbox" onchange="saveTask(this,'NPS','AUGUST')"></td>
+<td><input type="checkbox" onchange="saveTask(this,'NPS','SEPTEMBER')"></td>
+<td><input type="checkbox" onchange="saveTask(this,'NPS','OCTOBER')"></td>
+<td><input type="checkbox" onchange="saveTask(this,'NPS','NOVEMBER')"></td>
+<td><input type="checkbox" onchange="saveTask(this,'NPS','DECEMBER')"></td>
+</tr>
+
+<tr>
+<td>MEDISEP</td>
+<td><input type="checkbox" onchange="saveTask(this,'MEDISEP','JUNE')"></td>
+<td><input type="checkbox" onchange="saveTask(this,'MEDISEP','JULY')"></td>
+<td><input type="checkbox" onchange="saveTask(this,'MEDISEP','AUGUST')"></td>
+<td><input type="checkbox" onchange="saveTask(this,'MEDISEP','SEPTEMBER')"></td>
+<td><input type="checkbox" onchange="saveTask(this,'MEDISEP','OCTOBER')"></td>
+<td><input type="checkbox" onchange="saveTask(this,'MEDISEP','NOVEMBER')"></td>
+<td><input type="checkbox" onchange="saveTask(this,'MEDISEP','DECEMBER')"></td>
+</tr>
+
+<tr>
+<td>KPEPF</td>
+<td><input type="checkbox" onchange="saveTask(this,'KPEPF','JUNE')"></td>
+<td><input type="checkbox" onchange="saveTask(this,'KPEPF','JULY')"></td>
+<td><input type="checkbox" onchange="saveTask(this,'KPEPF','AUGUST')"></td>
+<td><input type="checkbox" onchange="saveTask(this,'KPEPF','SEPTEMBER')"></td>
+<td><input type="checkbox" onchange="saveTask(this,'KPEPF','OCTOBER')"></td>
+<td><input type="checkbox" onchange="saveTask(this,'KPEPF','NOVEMBER')"></td>
+<td><input type="checkbox" onchange="saveTask(this,'KPEPF','DECEMBER')"></td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<div class="status" id="status"></div>
+
+<div class="footer">
+Google Sheet Connected ✓
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const WEBAPP_URL =
+"https://script.google.com/macros/s/AKfycbxXhlYx0zHAQrBYAiNENfacgTCZVLcnb2Po6qY6va1iO_gf_alpPZfo4zHLjxIvVUdGSQ/exec";
+
+function saveTask(box, task, month){
+
+    let status = box.checked;
+
+    document.getElementById("status").innerHTML =
+    "Saving...";
+
+    fetch(WEBAPP_URL,{
+        method:"POST",
+        body:JSON.stringify({
+            task:task,
+            month:month,
+            status:status,
+            date:new Date().toLocaleString()
+        })
+    })
+    .then(res=>res.text())
+    .then(data=>{
+
+        document.getElementById("status").innerHTML =
+        "✓ Saved : " + task + " - " + month;
+
+        setTimeout(()=>{
+            document.getElementById("status").innerHTML="";
+        },3000);
+
+    })
+    .catch(error=>{
+
+        document.getElementById("status").innerHTML =
+        "❌ Error Saving1";
+
+        console.error(error);
+
+    });
+}
+
+</script>
+
+</body>
+</html>
