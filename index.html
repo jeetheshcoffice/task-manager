@@ -16,28 +16,68 @@
     font-family: 'Inter', sans-serif;
 }
 
-/* Professional Soft Blue-Gray Background */
 body {
     background-color: #f1f5f9;
     background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
     background-size: 20px 20px;
     color: #0f172a;
     min-height: 100vh;
-    padding: 40px 20px;
+    padding: 60px 20px 40px; /* Added top padding to accommodate loader */
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+/* --------------------------------------
+   TOP LOADING BANNER (NEW)
+--------------------------------------- */
+#topLoader {
+    position: fixed;
+    top: -60px; /* Hidden state */
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1e3a8a; /* Official Navy Blue */
+    color: #ffffff;
+    padding: 12px 24px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
+    transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 2000;
+}
+
+#topLoader.show {
+    top: 0; /* Visible state */
+}
+
+/* Spinning Animation for Loader */
+.spinner {
+    width: 18px;
+    height: 18px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+/* --------------------------------------
+   ENTERPRISE CARD DESIGN
+--------------------------------------- */
 .container {
     width: 100%;
     max-width: 1300px;
     margin: auto;
 }
 
-/* --------------------------------------
-   ENTERPRISE CARD DESIGN (Clean Frosted White)
---------------------------------------- */
 .card {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(12px);
@@ -48,13 +88,12 @@ body {
     overflow: hidden;
 }
 
-/* Official Navy Blue Header */
 .header {
     background: linear-gradient(135deg, #1e3a8a, #2563eb);
     padding: 35px 20px;
     text-align: center;
     color: #ffffff;
-    border-bottom: 4px solid #10b981; /* Subtle touch of official green */
+    border-bottom: 4px solid #10b981;
 }
 
 .header h1 {
@@ -78,7 +117,6 @@ table {
     border-collapse: collapse;
 }
 
-/* Crisp, Readable Table Headers */
 th {
     background: #f8fafc;
     color: #475569;
@@ -98,13 +136,12 @@ td {
     transition: background 0.2s;
 }
 
-/* Striped rows for better data tracking */
 tr:nth-child(even) td {
     background-color: #fafaf9;
 }
 
 tr:hover td {
-    background: #f0f9ff; /* Very subtle blue highlight on hover */
+    background: #f0f9ff;
 }
 
 td:first-child {
@@ -115,7 +152,6 @@ td:first-child {
     color: #0f172a;
 }
 
-/* Professional Due Date Badge (Subtle Amber/Red) */
 .due-badge {
     background: #fffbeb;
     border: 1px solid #fde68a;
@@ -134,9 +170,6 @@ td:first-child {
     gap: 12px;
 }
 
-/* --------------------------------------
-   ACCESSIBLE, HIGH-CONTRAST CHECKBOXES
---------------------------------------- */
 input[type=checkbox] {
     appearance: none;
     width: 26px;
@@ -155,7 +188,7 @@ input[type=checkbox]:hover {
 }
 
 input[type=checkbox]:checked {
-    background: #059669; /* Official solid green */
+    background: #059669;
     border-color: #059669;
     box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
 }
@@ -170,7 +203,6 @@ input[type=checkbox]:checked:after {
     font-size: 16px;
 }
 
-/* Calendar Icon */
 .date-icon {
     display: none;
     cursor: pointer;
@@ -210,7 +242,7 @@ input[type=checkbox]:checked + .date-icon {
 .popup-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(15, 23, 42, 0.5); /* Dark slate overlay */
+    background: rgba(15, 23, 42, 0.5);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
     display: flex;
@@ -263,6 +295,12 @@ input[type=checkbox]:checked + .date-icon {
 </style>
 </head>
 <body>
+
+<!-- NEW SYSTEM LOADER -->
+<div id="topLoader">
+    <div class="spinner"></div>
+    <span id="loaderText">Loading Database...</span>
+</div>
 
 <div class="container">
     <div class="card">
@@ -346,10 +384,30 @@ input[type=checkbox]:checked + .date-icon {
     <input type="hidden" name="status" id="statusField">
     <input type="hidden" name="date" id="date">
 </form>
-<iframe name="hiddenFrame" style="display:none"></iframe>
+
+<!-- ADDED ONLOAD LISTENER TO IFRAME -->
+<iframe name="hiddenFrame" id="hiddenFrame" style="display:none" onload="handleIframeLoad()"></iframe>
 
 <script>
+// --- Loader Functions ---
+function setLoader(state, text = "") {
+    const loader = document.getElementById("topLoader");
+    const loaderText = document.getElementById("loaderText");
+    
+    if (state === "show") {
+        loaderText.innerText = text;
+        loader.classList.add("show");
+    } else {
+        loader.classList.remove("show");
+    }
+}
+
+// Show loader instantly when page opens
+setLoader("show", "Connecting to Database...");
+
 // --- Task Saving Logic ---
+let iframeLoadCount = 0; // Tracks form submissions
+
 function saveTask(box, task, month){
     const elementId = task + "_" + month;
     const icon = document.getElementById("date_" + elementId);
@@ -369,15 +427,26 @@ function saveTask(box, task, month){
         icon.removeAttribute("data-date");
     }
 
+    // Trigger Loading UI
+    setLoader("show", "Syncing Update...");
     document.getElementById("sheetForm").submit();
+}
 
-    const statusDiv = document.getElementById("status");
-    statusDiv.innerHTML = "✓ Securely Synced to Database";
-    statusDiv.style.opacity = 1;
-    
-    setTimeout(() => {
-        statusDiv.innerHTML = "";
-    }, 2500);
+// --- Iframe Completion Trigger ---
+function handleIframeLoad() {
+    iframeLoadCount++;
+    // We ignore the very first load because empty iframes trigger onload instantly on page load
+    if (iframeLoadCount > 1) {
+        setLoader("hide"); // Hide the drop-down loader
+        
+        const statusDiv = document.getElementById("status");
+        statusDiv.innerHTML = "✓ Securely Synced to Database";
+        statusDiv.style.opacity = 1;
+        
+        setTimeout(() => {
+            statusDiv.innerHTML = "";
+        }, 3000);
+    }
 }
 
 // --- Data Loading Logic ---
@@ -392,6 +461,9 @@ function loadSavedData(data){
             if(icon && row.date) icon.setAttribute("data-date", row.date);
         }
     });
+    
+    // Data has finished loading, remove the loader!
+    setLoader("hide");
 }
 
 // --- Smooth Popup Logic ---
@@ -418,7 +490,7 @@ function closePopup(event) {
     }
 }
 
-// Inject Script to fetch data
+// Inject Script to fetch data from Google Apps Script
 const script = document.createElement("script");
 script.src = "https://script.google.com/macros/s/AKfycbwL6wpOUEIXVO_i_1EHdiT3f-8Fpn2R4mu5omqHCZYV4dpAewFPyWjOg2l7aSnAxvXuuw/exec?callback=loadSavedData";
 document.body.appendChild(script);
