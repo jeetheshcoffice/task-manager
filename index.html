@@ -59,11 +59,20 @@ td{
 padding:18px;
 text-align:center;
 border-bottom:1px solid #eee;
+vertical-align: middle;
 }
 
 td:first-child{
 text-align:left;
 font-weight:600;
+}
+
+/* Flex wrapper inside cells to align checkbox and calendar cleanly */
+.cell-wrapper {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+gap: 8px;
 }
 
 input[type=checkbox]{
@@ -91,6 +100,24 @@ color:white;
 font-weight:bold;
 }
 
+/* Style for the calendar icon */
+.date-icon {
+display: none;
+cursor: pointer;
+font-size: 16px;
+user-select: none;
+transition: transform 0.2s;
+}
+
+.date-icon:hover {
+transform: scale(1.2);
+}
+
+/* Auto-display calendar icon only when checkbox is checked */
+input[type=checkbox]:checked + .date-icon {
+display: inline-block;
+}
+
 .status{
 padding:15px;
 text-align:center;
@@ -109,7 +136,7 @@ color:#16a34a;
 <div class="card">
 
 <div class="header">
-TASK MANAGER 1
+TASK MANAGER 2
 </div>
 
 <table>
@@ -127,38 +154,140 @@ TASK MANAGER 1
 
 <tr>
 <td>NPS</td>
-
-<td><input id="NPS_JUNE" type="checkbox" onchange="saveTask(this,'NPS','JUNE')"></td>
-<td><input id="NPS_JULY" type="checkbox" onchange="saveTask(this,'NPS','JULY')"></td>
-<td><input id="NPS_AUGUST" type="checkbox" onchange="saveTask(this,'NPS','AUGUST')"></td>
-<td><input id="NPS_SEPTEMBER" type="checkbox" onchange="saveTask(this,'NPS','SEPTEMBER')"></td>
-<td><input id="NPS_OCTOBER" type="checkbox" onchange="saveTask(this,'NPS','OCTOBER')"></td>
-<td><input id="NPS_NOVEMBER" type="checkbox" onchange="saveTask(this,'NPS','NOVEMBER')"></td>
-<td><input id="NPS_DECEMBER" type="checkbox" onchange="saveTask(this,'NPS','DECEMBER')"></td>
+<td>
+  <div class="cell-wrapper">
+    <input id="NPS_JUNE" type="checkbox" onchange="saveTask(this,'NPS','JUNE')">
+    <span class="date-icon" id="date_NPS_JUNE" onclick="showDate(this)" title="Click to view completion date">📅</span>
+  </div>
+</td>
+<td>
+  <div class="cell-wrapper">
+    <input id="NPS_JULY" type="checkbox" onchange="saveTask(this,'NPS','JULY')">
+    <span class="date-icon" id="date_NPS_JULY" onclick="showDate(this)" title="Click to view completion date">📅</span>
+  </div>
+</td>
+<td>
+  <div class="cell-wrapper">
+    <input id="NPS_AUGUST" type="checkbox" onchange="saveTask(this,'NPS','AUGUST')">
+    <span class="date-icon" id="date_NPS_AUGUST" onclick="showDate(this)" title="Click to view completion date">📅</span>
+  </div>
+</td>
+<td>
+  <div class="cell-wrapper">
+    <input id="NPS_SEPTEMBER" type="checkbox" onchange="saveTask(this,'NPS','SEPTEMBER')">
+    <span class="date-icon" id="date_NPS_SEPTEMBER" onclick="showDate(this)" title="Click to view completion date">📅</span>
+  </div>
+</td>
+<td>
+  <div class="cell-wrapper">
+    <input id="NPS_OCTOBER" type="checkbox" onchange="saveTask(this,'NPS','OCTOBER')">
+    <span class="date-icon" id="date_NPS_OCTOBER" onclick="showDate(this)" title="Click to view completion date">📅</span>
+  </div>
+</td>
+<td>
+  <div class="cell-wrapper">
+    <input id="NPS_NOVEMBER" type="checkbox" onchange="saveTask(this,'NPS','NOVEMBER')">
+    <span class="date-icon" id="date_NPS_NOVEMBER" onclick="showDate(this)" title="Click to view completion date">📅</span>
+  </div>
+</td>
+<td>
+  <div class="cell-wrapper">
+    <input id="NPS_DECEMBER" type="checkbox" onchange="saveTask(this,'NPS','DECEMBER')">
+    <span class="date-icon" id="date_NPS_DECEMBER" onclick="showDate(this)" title="Click to view completion date">📅</span>
+  </div>
+</td>
 </tr>
 
 <tr>
 <td>MEDISEP</td>
-
-<td><input id="MEDISEP_JUNE" type="checkbox" onchange="saveTask(this,'MEDISEP','JUNE')"></td>
-<td><input id="MEDISEP_JULY" type="checkbox" onchange="saveTask(this,'MEDISEP','JULY')"></td>
-<td><input id="MEDISEP_AUGUST" type="checkbox" onchange="saveTask(this,'MEDISEP','AUGUST')"></td>
-<td><input id="MEDISEP_SEPTEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','SEPTEMBER')"></td>
-<td><input id="MEDISEP_OCTOBER" type="checkbox" onchange="saveTask(this,'MEDISEP','OCTOBER')"></td>
-<td><input id="MEDISEP_NOVEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','NOVEMBER')"></td>
-<td><input id="MEDISEP_DECEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','DECEMBER')"></td>
+<td>
+  <div class="cell-wrapper">
+    <input id="MEDISEP_JUNE" type="checkbox" onchange="saveTask(this,'MEDISEP','JUNE')">
+    <span class="date-icon" id="date_MEDISEP_JUNE" onclick="showDate(this)" title="Click to view completion date">📅</span>
+  </div>
+</td>
+<td>
+  <div class="cell-wrapper">
+    <input id="MEDISEP_JULY" type="checkbox" onchange="saveTask(this,'MEDISEP','JULY')">
+    <span class="date-icon" id="date_MEDISEP_JULY" onclick="showDate(this)" title="Click to view completion date">📅</span>
+  </div>
+</td>
+<td>
+  <div class="cell-wrapper">
+    <input id="MEDISEP_AUGUST" type="checkbox" onchange="saveTask(this,'MEDISEP','AUGUST')">
+    <span class="date-icon" id="date_MEDISEP_AUGUST" onclick="showDate(this)" title="Click to view completion date">📅</span>
+  </div>
+</td>
+<td>
+  <div class="cell-wrapper">
+    <input id="MEDISEP_SEPTEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','SEPTEMBER')">
+    <span class="date-icon" id="date_MEDISEP_SEPTEMBER" onclick="showDate(this)" title="Click to view completion date">📅</span>
+  </div>
+</td>
+<td>
+  <div class="cell-wrapper">
+    <input id="MEDISEP_OCTOBER" type="checkbox" onchange="saveTask(this,'MEDISEP','OCTOBER')">
+    <span class="date-icon" id="date_MEDISEP_OCTOBER" onclick="showDate(this)" title="Click to view completion date">📅</span>
+  </div>
+</td>
+<td>
+  <div class="cell-wrapper">
+    <input id="MEDISEP_NOVEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','NOVEMBER')">
+    <span class="date-icon" id="date_MEDISEP_NOVEMBER" onclick="showDate(this)" title="Click to view completion date">📅</span>
+  </div>
+</td>
+<td>
+  <div class="cell-wrapper">
+    <input id="MEDISEP_DECEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','DECEMBER')">
+    <span class="date-icon" id="date_MEDISEP_DECEMBER" onclick="showDate(this)" title="Click to view completion date">📅</span>
+  </div>
+</td>
 </tr>
 
 <tr>
 <td>KPEPF</td>
-
-<td><input id="KPEPF_JUNE" type="checkbox" onchange="saveTask(this,'KPEPF','JUNE')"></td>
-<td><input id="KPEPF_JULY" type="checkbox" onchange="saveTask(this,'KPEPF','JULY')"></td>
-<td><input id="KPEPF_AUGUST" type="checkbox" onchange="saveTask(this,'KPEPF','AUGUST')"></td>
-<td><input id="KPEPF_SEPTEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','SEPTEMBER')"></td>
-<td><input id="KPEPF_OCTOBER" type="checkbox" onchange="saveTask(this,'KPEPF','OCTOBER')"></td>
-<td><input id="KPEPF_NOVEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','NOVEMBER')"></td>
-<td><input id="KPEPF_DECEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','DECEMBER')"></td>
+<td>
+  <div class="cell-wrapper">
+    <input id="KPEPF_JUNE" type="checkbox" onchange="saveTask(this,'KPEPF','JUNE')">
+    <span class="date-icon" id="date_KPEPF_JUNE" onclick="showDate(this)" title="Click to view completion date">📅</span>
+  </div>
+</td>
+<td>
+  <div class="cell-wrapper">
+    <input id="KPEPF_JULY" type="checkbox" onchange="saveTask(this,'KPEPF','JULY')">
+    <span class="date-icon" id="date_KPEPF_JULY" onclick="showDate(this)" title="Click to view completion date">📅</span>
+  </div>
+</td>
+<td>
+  <div class="cell-wrapper">
+    <input id="KPEPF_AUGUST" type="checkbox" onchange="saveTask(this,'KPEPF','AUGUST')">
+    <span class="date-icon" id="date_KPEPF_AUGUST" onclick="showDate(this)" title="Click to view completion date">📅</span>
+  </div>
+</td>
+<td>
+  <div class="cell-wrapper">
+    <input id="KPEPF_SEPTEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','SEPTEMBER')">
+    <span class="date-icon" id="date_KPEPF_SEPTEMBER" onclick="showDate(this)" title="Click to view completion date">📅</span>
+  </div>
+</td>
+<td>
+  <div class="cell-wrapper">
+    <input id="KPEPF_OCTOBER" type="checkbox" onchange="saveTask(this,'KPEPF','OCTOBER')">
+    <span class="date-icon" id="date_KPEPF_OCTOBER" onclick="showDate(this)" title="Click to view completion date">📅</span>
+  </div>
+</td>
+<td>
+  <div class="cell-wrapper">
+    <input id="KPEPF_NOVEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','NOVEMBER')">
+    <span class="date-icon" id="date_KPEPF_NOVEMBER" onclick="showDate(this)" title="Click to view completion date">📅</span>
+  </div>
+</td>
+<td>
+  <div class="cell-wrapper">
+    <input id="KPEPF_DECEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','DECEMBER')">
+    <span class="date-icon" id="date_KPEPF_DECEMBER" onclick="showDate(this)" title="Click to view completion date">📅</span>
+  </div>
+</td>
 </tr>
 
 </table>
@@ -188,10 +317,21 @@ target="hiddenFrame">
 
 function saveTask(box,task,month){
 
+const elementId = task + "_" + month;
+const icon = document.getElementById("date_" + elementId);
+const timestamp = new Date().toLocaleString();
+
 document.getElementById("task").value=task;
 document.getElementById("month").value=month;
 document.getElementById("statusField").value=box.checked;
-document.getElementById("date").value=new Date().toLocaleString();
+document.getElementById("date").value=timestamp;
+
+// Instantly apply timestamp to icon data attribute locally
+if (box.checked && icon) {
+  icon.setAttribute("data-date", timestamp);
+} else if (icon) {
+  icon.removeAttribute("data-date");
+}
 
 document.getElementById("sheetForm").submit();
 
@@ -204,6 +344,15 @@ document.getElementById("status").innerHTML="";
 
 }
 
+function showDate(icon) {
+  const savedDate = icon.getAttribute("data-date");
+  if(savedDate) {
+    alert("Completed on: " + savedDate);
+  } else {
+    alert("Date tracking syncing with Google Sheet...");
+  }
+}
+
 function loadSavedData(data){
 
 data.forEach(row=>{
@@ -211,11 +360,15 @@ data.forEach(row=>{
 if(String(row.status).toUpperCase()=="TRUE"){
 
 const id=row.task+"_"+row.month;
-
 const cb=document.getElementById(id);
+const icon=document.getElementById("date_" + id);
 
 if(cb){
 cb.checked=true;
+}
+
+if(icon && row.date){
+icon.setAttribute("data-date", row.date);
 }
 
 }
@@ -224,7 +377,6 @@ cb.checked=true;
 
 }
 
-// Script loading configured with your Google Apps Script URL
 const script=document.createElement("script");
 
 script.src=
