@@ -107,7 +107,7 @@ input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 4
                 <td>
                     <div class="remark-wrapper">
                         <input type="text" id="remark_NPS" class="remark-input" placeholder="Type note...">
-                        <button class="remark-btn" onclick="submitRemark('NPS')">Submit</button>
+                        <button class="remark-btn" onclick="submitRemark('NPS')">Update</button>
                     </div>
                 </td>
             </tr>
@@ -124,7 +124,7 @@ input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 4
                 <td>
                     <div class="remark-wrapper">
                         <input type="text" id="remark_MEDISEP" class="remark-input" placeholder="Type note...">
-                        <button class="remark-btn" onclick="submitRemark('MEDISEP')">Submit</button>
+                        <button class="remark-btn" onclick="submitRemark('MEDISEP')">Update</button>
                     </div>
                 </td>
             </tr>
@@ -141,7 +141,7 @@ input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 4
                 <td>
                     <div class="remark-wrapper">
                         <input type="text" id="remark_KPEPF" class="remark-input" placeholder="Type note...">
-                        <button class="remark-btn" onclick="submitRemark('KPEPF')">Submit</button>
+                        <button class="remark-btn" onclick="submitRemark('KPEPF')">Update</button>
                     </div>
                 </td>
             </tr>
@@ -159,7 +159,7 @@ input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 4
     </div>
 </div>
 
-<form id="sheetForm" action="https://script.google.com/macros/s/AKfycbyBK9wcO5b8YffPYFlBix7nryIfzDawK8ZFOpOZq-R6a8DsN6DhG9mt9MyMhzIzfCR-EQ/exec" method="POST" target="hiddenFrame">
+<form id="sheetForm" action="https://script.google.com/macros/s/AKfycbxG090XKS1Yi-hK9EvznrMf7ODnvNqv0NjHADJ35pG0gsHYNgF0UFbdCsh-IkNrEwMuCw/exec" method="POST" target="hiddenFrame">
     <input type="hidden" name="action" id="actionField" value="saveTask">
     <input type="hidden" name="task" id="task">
     <input type="hidden" name="month" id="month">
@@ -172,13 +172,10 @@ input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 4
 <iframe name="hiddenFrame" id="hiddenFrame" style="display:none"></iframe>
 
 <script>
-// --- Initialize the iframe listener cleanly to prevent errors ---
 document.getElementById('hiddenFrame').addEventListener('load', handleIframeLoad);
 
-// --- Core Map for Date Logic ---
 const monthMap = { 'JUNE': 5, 'JULY': 6, 'AUGUST': 7, 'SEPTEMBER': 8, 'OCTOBER': 9, 'NOVEMBER': 10, 'DECEMBER': 11 };
 
-// --- Loader Functions ---
 function setLoader(state, text = "") {
     const loader = document.getElementById("topLoader");
     const loaderText = document.getElementById("loaderText");
@@ -187,7 +184,6 @@ function setLoader(state, text = "") {
 }
 setLoader("show", "Connecting to Database...");
 
-// --- Auto-Calculation For Overdue Tasks ---
 function checkOverdue(triggerStartupPopup = false) {
     const today = new Date();
     const currentMonth = today.getMonth(); 
@@ -226,7 +222,6 @@ function checkOverdue(triggerStartupPopup = false) {
     }
 }
 
-// --- Task Saving Logic (Sheet 1) ---
 let isSubmitting = false; 
 
 function saveTask(box, task, month){
@@ -253,13 +248,12 @@ function saveTask(box, task, month){
     setTimeout(() => { if (isSubmitting) completeSync(); }, 2500);
 }
 
-// --- Remark Saving Logic (Sheet 2) ---
 function submitRemark(task) {
     const remarkInput = document.getElementById('remark_' + task);
     const remarkText = remarkInput.value.trim();
 
     if (!remarkText) {
-        triggerPopup("❌", "Empty Remark", "Please type a remark in the text box before submitting.", "#b45309");
+        triggerPopup("❌", "Empty Remark", "Please type a remark in the text box before updating.", "#b45309");
         return;
     }
 
@@ -271,35 +265,47 @@ function submitRemark(task) {
     setLoader("show", "Saving Remark...");
     document.getElementById("sheetForm").submit();
     
-    remarkInput.value = "";
+    // DELIBERATELY REMOVED: remarkInput.value = ""; 
+    // Now the text stays in the box after you hit submit!
 
-    triggerPopup("📝", "Remark Logged", `Your note for ${task} was securely sent to Sheet2.`, "#1e3a8a");
+    triggerPopup("📝", "Remark Logged", `Your note for ${task} was securely sent to the database.`, "#1e3a8a");
     setTimeout(() => { if (isSubmitting) completeSync(); }, 2500);
 }
 
 function handleIframeLoad() { if (isSubmitting) completeSync(); }
 function completeSync() { isSubmitting = false; setLoader("hide"); }
 
-// --- Data Loading Logic ---
+// --- Upgraded Data Loading Logic ---
 function loadSavedData(data){
-    data.forEach(row => {
-        if(String(row.status).toUpperCase() == "TRUE"){
-            const id = row.task + "_" + row.month;
-            const cb = document.getElementById(id);
-            if(cb) cb.checked = true;
+    // 1. Process Tasks & Due Dates
+    if(data.tasks) {
+        data.tasks.forEach(row => {
+            if(String(row.status).toUpperCase() == "TRUE"){
+                const id = row.task + "_" + row.month;
+                const cb = document.getElementById(id);
+                if(cb) cb.checked = true;
+            }
+            if (row.dueDate) {
+                const dueInput = document.getElementById('due_' + row.task);
+                if (dueInput) dueInput.value = row.dueDate;
+            }
+        });
+    }
+
+    // 2. Process Remarks (Inject them directly into the text boxes!)
+    if(data.remarks) {
+        for (const [taskName, remarkText] of Object.entries(data.remarks)) {
+            const remarkInput = document.getElementById('remark_' + taskName);
+            if (remarkInput) {
+                remarkInput.value = remarkText; // Fills the box automatically!
+            }
         }
-        
-        if (row.dueDate) {
-            const dueInput = document.getElementById('due_' + row.task);
-            if (dueInput) dueInput.value = row.dueDate;
-        }
-    });
+    }
     
     setLoader("hide");
     checkOverdue(true); 
 }
 
-// --- Unified Popup Handler ---
 function triggerPopup(icon, title, message, titleColor) {
     document.getElementById("popupIcon").innerText = icon;
     const titleEl = document.getElementById("popupTitle");
@@ -315,9 +321,8 @@ function closePopup(event) {
     }
 }
 
-// Script fetching URL properly replaced
 const script = document.createElement("script");
-script.src = "https://script.google.com/macros/s/AKfycbyBK9wcO5b8YffPYFlBix7nryIfzDawK8ZFOpOZq-R6a8DsN6DhG9mt9MyMhzIzfCR-EQ/exec?callback=loadSavedData";
+script.src = "https://script.google.com/macros/s/AKfycbxG090XKS1Yi-hK9EvznrMf7ODnvNqv0NjHADJ35pG0gsHYNgF0UFbdCsh-IkNrEwMuCw/exec?callback=loadSavedData";
 document.body.appendChild(script);
 </script>
 
