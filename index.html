@@ -8,278 +8,132 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
 body {
     background-color: #f1f5f9;
     background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
     background-size: 20px 20px;
-    color: #0f172a;
-    min-height: 100vh;
-    padding: 60px 20px 40px; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    color: #0f172a; min-height: 100vh; padding: 60px 20px 40px; 
+    display: flex; justify-content: center; align-items: center;
 }
 
-/* --------------------------------------
-   TOP LOADING BANNER
---------------------------------------- */
 #topLoader {
-    position: fixed;
-    top: -60px; /* Hidden state */
-    left: 50%;
-    transform: translateX(-50%);
-    background: #1e3a8a; /* Official Navy Blue */
-    color: #ffffff;
-    padding: 12px 24px;
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
-    font-size: 14px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
-    transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    z-index: 2000;
+    position: fixed; top: -60px; left: 50%; transform: translateX(-50%);
+    background: #1e3a8a; color: #ffffff; padding: 12px 24px;
+    border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;
+    font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 12px;
+    box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3); transition: top 0.4s ease; z-index: 2000;
 }
+#topLoader.show { top: 0; }
+.spinner { width: 18px; height: 18px; border: 3px solid rgba(255,255,255,0.3); border-top-color: #ffffff; border-radius: 50%; animation: spin 1s linear infinite; }
+@keyframes spin { 100% { transform: rotate(360deg); } }
 
-#topLoader.show {
-    top: 0; /* Visible state */
+.container { width: 100%; max-width: 1300px; margin: auto; }
+.card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border: 1px solid #ffffff; border-radius: 16px; box-shadow: 0 10px 40px rgba(15, 23, 42, 0.08); overflow: hidden; }
+
+.header { background: linear-gradient(135deg, #1e3a8a, #2563eb); padding: 35px 20px; text-align: center; color: #ffffff; border-bottom: 4px solid #10b981; }
+.header h1 { font-size: 32px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 8px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+.header h2 { font-size: 16px; font-weight: 500; letter-spacing: 2px; color: #bfdbfe; text-transform: uppercase; }
+
+table { width: 100%; border-collapse: collapse; }
+th { background: #f8fafc; color: #475569; padding: 18px 15px; font-weight: 600; font-size: 13px; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; }
+td { padding: 20px 10px; text-align: center; border-bottom: 1px solid #f1f5f9; color: #1e293b; transition: background 0.2s; }
+tr:nth-child(even) td { background-color: #fafaf9; }
+tr:hover td { background: #f0f9ff; }
+td:first-child { text-align: left; font-weight: 600; font-size: 16px; padding-left: 40px; color: #0f172a; }
+
+/* Dynamic Due Date Input */
+.due-input {
+    width: 50px; padding: 6px; border-radius: 8px; border: 2px solid #cbd5e1;
+    text-align: center; font-weight: 700; font-size: 14px; color: #b45309; background: #fffbeb;
+    outline: none; transition: 0.2s;
 }
+.due-input:focus { border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2); }
 
-/* Spinning Animation for Loader */
-.spinner {
-    width: 18px;
-    height: 18px;
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-top-color: #ffffff;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
+.cell-wrapper { display: inline-flex; align-items: center; justify-content: center; gap: 8px; position: relative; }
 
-@keyframes spin {
-    100% { transform: rotate(360deg); }
-}
-
-/* --------------------------------------
-   ENTERPRISE CARD DESIGN
---------------------------------------- */
-.container {
-    width: 100%;
-    max-width: 1300px;
-    margin: auto;
-}
-
-.card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 10px 40px rgba(15, 23, 42, 0.08);
-    overflow: hidden;
-}
-
-.header {
-    background: linear-gradient(135deg, #1e3a8a, #2563eb);
-    padding: 35px 20px;
-    text-align: center;
-    color: #ffffff;
-    border-bottom: 4px solid #10b981;
-}
-
-.header h1 {
-    font-size: 32px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    margin-bottom: 8px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-.header h2 {
-    font-size: 16px;
-    font-weight: 500;
-    letter-spacing: 2px;
-    color: #bfdbfe;
-    text-transform: uppercase;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th {
-    background: #f8fafc;
-    color: #475569;
-    padding: 18px 15px;
-    font-weight: 600;
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border-bottom: 2px solid #e2e8f0;
-}
-
-td {
-    padding: 20px 10px;
-    text-align: center;
-    border-bottom: 1px solid #f1f5f9;
-    color: #1e293b;
-    transition: background 0.2s;
-}
-
-tr:nth-child(even) td {
-    background-color: #fafaf9;
-}
-
-tr:hover td {
-    background: #f0f9ff;
-}
-
-td:first-child {
-    text-align: left;
-    font-weight: 600;
-    font-size: 16px;
-    padding-left: 40px;
-    color: #0f172a;
-}
-
-.due-badge {
-    background: #fffbeb;
-    border: 1px solid #fde68a;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 13px;
-    color: #b45309;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-}
-
-.cell-wrapper {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* --------------------------------------
-   HIGH-CONTRAST CHECKBOXES
---------------------------------------- */
 input[type=checkbox] {
-    appearance: none;
-    width: 26px;
-    height: 26px;
-    background: #ffffff;
-    border: 2px solid #cbd5e1;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.2s ease;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    appearance: none; width: 26px; height: 26px; background: #ffffff; border: 2px solid #cbd5e1;
+    border-radius: 6px; cursor: pointer; position: relative; transition: all 0.2s ease;
 }
+input[type=checkbox]:checked { background: #059669; border-color: #059669; box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3); }
+input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 5px; top: 1px; color: white; font-weight: bold; font-size: 16px; }
 
-input[type=checkbox]:hover {
-    border-color: #94a3b8;
-}
+/* Warning Icon CSS */
+.warning-icon { display: none; cursor: help; font-size: 20px; animation: pulse 1.5s infinite; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
+.overdue .warning-icon { display: inline-block; }
 
-input[type=checkbox]:checked {
-    background: #059669;
-    border-color: #059669;
-    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
-}
-
-input[type=checkbox]:checked:after {
-    content: "✓";
-    position: absolute;
-    left: 5px;
-    top: 1px;
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
-}
-
-.status {
-    padding: 15px;
-    text-align: center;
-    font-weight: 600;
-    font-size: 15px;
-    color: #059669;
-    height: 55px;
-}
+.popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s ease; z-index: 1000; }
+.popup-overlay.active { opacity: 1; visibility: visible; }
+.popup-content { background: #ffffff; border: 1px solid #e2e8f0; padding: 40px; border-radius: 16px; text-align: center; color: #0f172a; box-shadow: 0 20px 50px rgba(0,0,0,0.15); transform: translateY(20px) scale(0.95); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; max-width: 400px; width: 90%; }
+.popup-overlay.active .popup-content { transform: translateY(0) scale(1); }
+.close-btn { position: absolute; top: 15px; right: 20px; font-size: 26px; cursor: pointer; color: #94a3b8; transition: 0.2s; }
+.close-btn:hover { color: #0f172a; }
+.popup-icon { font-size: 45px; margin-bottom: 15px; }
+.popup-content h3 { margin-bottom: 12px; font-weight: 700; font-size: 22px; }
+.popup-content p { font-size: 15px; color: #475569; line-height: 1.6; font-weight: 400; }
 </style>
 </head>
 <body>
 
-<div id="topLoader">
-    <div class="spinner"></div>
-    <span id="loaderText">Loading Database...</span>
-</div>
+<div id="topLoader"><div class="spinner"></div><span id="loaderText">Loading Database...</span></div>
 
 <div class="container">
     <div class="card">
-        
         <div class="header">
             <h1>Manjeshwar Grama Panchayat</h1>
-            <h2>Task Management System 2</h2>
+            <h2>Task Management System</h2>
         </div>
-        
         <table>
             <tr>
-                <th>TASK</th>
-                <th>DUE DATE</th>
-                <th>JUNE</th>
-                <th>JULY</th>
-                <th>AUGUST</th>
-                <th>SEPTEMBER</th>
-                <th>OCTOBER</th>
-                <th>NOVEMBER</th>
-                <th>DECEMBER</th>
+                <th>TASK</th><th>DUE DATE</th><th>JUNE</th><th>JULY</th><th>AUGUST</th><th>SEPTEMBER</th><th>OCTOBER</th><th>NOVEMBER</th><th>DECEMBER</th>
             </tr>
-            
             <tr>
                 <td>NPS</td>
-                <td><span class="due-badge">5th</span></td>
-                <td><div class="cell-wrapper"><input id="NPS_JUNE" type="checkbox" onchange="saveTask(this,'NPS','JUNE')"></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_JULY" type="checkbox" onchange="saveTask(this,'NPS','JULY')"></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_AUGUST" type="checkbox" onchange="saveTask(this,'NPS','AUGUST')"></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_SEPTEMBER" type="checkbox" onchange="saveTask(this,'NPS','SEPTEMBER')"></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_OCTOBER" type="checkbox" onchange="saveTask(this,'NPS','OCTOBER')"></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_NOVEMBER" type="checkbox" onchange="saveTask(this,'NPS','NOVEMBER')"></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_DECEMBER" type="checkbox" onchange="saveTask(this,'NPS','DECEMBER')"></div></td>
+                <td><input type="number" id="due_NPS" class="due-input" value="5" min="1" max="31" onchange="checkOverdue(false)"></td>
+                <td><div class="cell-wrapper"><input id="NPS_JUNE" type="checkbox" onchange="saveTask(this,'NPS','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="NPS_JULY" type="checkbox" onchange="saveTask(this,'NPS','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="NPS_AUGUST" type="checkbox" onchange="saveTask(this,'NPS','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="NPS_SEPTEMBER" type="checkbox" onchange="saveTask(this,'NPS','SEPTEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="NPS_OCTOBER" type="checkbox" onchange="saveTask(this,'NPS','OCTOBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="NPS_NOVEMBER" type="checkbox" onchange="saveTask(this,'NPS','NOVEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="NPS_DECEMBER" type="checkbox" onchange="saveTask(this,'NPS','DECEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
             </tr>
-            
             <tr>
                 <td>MEDISEP</td>
-                <td><span class="due-badge">5th</span></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_JUNE" type="checkbox" onchange="saveTask(this,'MEDISEP','JUNE')"></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_JULY" type="checkbox" onchange="saveTask(this,'MEDISEP','JULY')"></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_AUGUST" type="checkbox" onchange="saveTask(this,'MEDISEP','AUGUST')"></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_SEPTEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','SEPTEMBER')"></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_OCTOBER" type="checkbox" onchange="saveTask(this,'MEDISEP','OCTOBER')"></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_NOVEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','NOVEMBER')"></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_DECEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','DECEMBER')"></div></td>
+                <td><input type="number" id="due_MEDISEP" class="due-input" value="5" min="1" max="31" onchange="checkOverdue(false)"></td>
+                <td><div class="cell-wrapper"><input id="MEDISEP_JUNE" type="checkbox" onchange="saveTask(this,'MEDISEP','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="MEDISEP_JULY" type="checkbox" onchange="saveTask(this,'MEDISEP','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="MEDISEP_AUGUST" type="checkbox" onchange="saveTask(this,'MEDISEP','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="MEDISEP_SEPTEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','SEPTEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="MEDISEP_OCTOBER" type="checkbox" onchange="saveTask(this,'MEDISEP','OCTOBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="MEDISEP_NOVEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','NOVEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="MEDISEP_DECEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','DECEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
             </tr>
-            
             <tr>
                 <td>KPEPF</td>
-                <td><span class="due-badge">5th</span></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_JUNE" type="checkbox" onchange="saveTask(this,'KPEPF','JUNE')"></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_JULY" type="checkbox" onchange="saveTask(this,'KPEPF','JULY')"></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_AUGUST" type="checkbox" onchange="saveTask(this,'KPEPF','AUGUST')"></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_SEPTEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','SEPTEMBER')"></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_OCTOBER" type="checkbox" onchange="saveTask(this,'KPEPF','OCTOBER')"></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_NOVEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','NOVEMBER')"></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_DECEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','DECEMBER')"></div></td>
+                <td><input type="number" id="due_KPEPF" class="due-input" value="5" min="1" max="31" onchange="checkOverdue(false)"></td>
+                <td><div class="cell-wrapper"><input id="KPEPF_JUNE" type="checkbox" onchange="saveTask(this,'KPEPF','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="KPEPF_JULY" type="checkbox" onchange="saveTask(this,'KPEPF','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="KPEPF_AUGUST" type="checkbox" onchange="saveTask(this,'KPEPF','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="KPEPF_SEPTEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','SEPTEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="KPEPF_OCTOBER" type="checkbox" onchange="saveTask(this,'KPEPF','OCTOBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="KPEPF_NOVEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','NOVEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="KPEPF_DECEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','DECEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
             </tr>
         </table>
-        
-        <div class="status" id="status"></div>
+        <div style="height: 20px;"></div>
+    </div>
+</div>
+
+<div id="unifiedPopup" class="popup-overlay" onclick="closePopup(event)">
+    <div class="popup-content">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <div class="popup-icon" id="popupIcon">ℹ️</div>
+        <h3 id="popupTitle">Notification</h3>
+        <p id="popupMessage">Message</p>
     </div>
 </div>
 
@@ -288,65 +142,96 @@ input[type=checkbox]:checked:after {
     <input type="hidden" name="month" id="month">
     <input type="hidden" name="status" id="statusField">
     <input type="hidden" name="date" id="date">
-</form>
-
+    <input type="hidden" name="dueDate" id="dueDateField"> </form>
 <iframe name="hiddenFrame" id="hiddenFrame" style="display:none" onload="handleIframeLoad()"></iframe>
 
 <script>
+// --- Core Map for Date Logic ---
+const monthMap = { 'JUNE': 5, 'JULY': 6, 'AUGUST': 7, 'SEPTEMBER': 8, 'OCTOBER': 9, 'NOVEMBER': 10, 'DECEMBER': 11 };
+
 // --- Loader Functions ---
 function setLoader(state, text = "") {
     const loader = document.getElementById("topLoader");
     const loaderText = document.getElementById("loaderText");
-    
-    if (state === "show") {
-        loaderText.innerText = text;
-        loader.classList.add("show");
-    } else {
-        loader.classList.remove("show");
+    if (state === "show") { loaderText.innerText = text; loader.classList.add("show"); } 
+    else { loader.classList.remove("show"); }
+}
+setLoader("show", "Connecting to Database...");
+
+// --- Auto-Calculation For Overdue Tasks ---
+function checkOverdue(triggerStartupPopup = false) {
+    const today = new Date();
+    const currentMonth = today.getMonth(); // Jan = 0, June = 5
+    const currentDay = today.getDate();
+    let hasOverdue = false;
+
+    document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        const wrapper = cb.closest('.cell-wrapper');
+        const parts = cb.id.split('_');
+        const taskName = parts[0];
+        const monthStr = parts[1];
+        const targetMonth = monthMap[monthStr];
+        
+        // Read the user-editable Due Date input field for this specific task
+        const dueInput = document.getElementById('due_' + taskName);
+        const dueDate = parseInt(dueInput.value) || 5;
+
+        let isOverdue = false;
+        if (targetMonth !== undefined) {
+            // It is overdue if the current month has passed the target month
+            // OR if it's the exact target month AND today's date is >= the due date
+            if (currentMonth > targetMonth) {
+                isOverdue = true;
+            } else if (currentMonth === targetMonth && currentDay >= dueDate) {
+                isOverdue = true;
+            }
+        }
+
+        // Apply warning if overdue and unchecked!
+        if (!cb.checked && isOverdue) {
+            wrapper.classList.add('overdue');
+            hasOverdue = true;
+        } else {
+            wrapper.classList.remove('overdue');
+        }
+    });
+
+    // If page is just loading, trigger the PENDING popup
+    if (triggerStartupPopup && hasOverdue) {
+        triggerPopup("⚠️", "Tasks Pending", "You have overdue tasks. Please review the ⚠️ icons and complete them.", "#b45309");
     }
 }
 
-setLoader("show", "Connecting to Database...");
-
-// --- Task Saving Logic ---
+// --- Task Saving & Complete Popup Logic ---
 let isSubmitting = false; 
 
 function saveTask(box, task, month){
     const timestamp = new Date().toLocaleString();
+    const dueValue = document.getElementById('due_' + task).value;
 
     document.getElementById("task").value = task;
     document.getElementById("month").value = month;
     document.getElementById("statusField").value = box.checked;
     document.getElementById("date").value = timestamp;
+    document.getElementById("dueDateField").value = dueValue; // Saves exact due date to Sheet
+
+    // Recalculate warnings instantly so the ⚠️ disappears when checked
+    checkOverdue(false);
+
+    // If checking the box, show SUCCESS popup instantly
+    if (box.checked) {
+        triggerPopup("✅", "Task Completed!", `Great job! ${task} for ${month} has been successfully completed and recorded.`, "#1e3a8a");
+    }
 
     isSubmitting = true;
     setLoader("show", "Syncing Update...");
     document.getElementById("sheetForm").submit();
 
-    setTimeout(() => {
-        if (isSubmitting) {
-            completeSync();
-        }
-    }, 2500);
+    setTimeout(() => { if (isSubmitting) completeSync(); }, 2500);
 }
 
-function handleIframeLoad() {
-    if (isSubmitting) {
-        completeSync();
-    }
-}
-
-function completeSync() {
-    isSubmitting = false;
-    setLoader("hide"); 
-    
-    const statusDiv = document.getElementById("status");
-    statusDiv.innerHTML = "✓ Securely Synced to Database";
-    
-    setTimeout(() => {
-        statusDiv.innerHTML = "";
-    }, 3000);
-}
+function handleIframeLoad() { if (isSubmitting) completeSync(); }
+function completeSync() { isSubmitting = false; setLoader("hide"); }
 
 // --- Data Loading Logic ---
 function loadSavedData(data){
@@ -356,9 +241,34 @@ function loadSavedData(data){
             const cb = document.getElementById(id);
             if(cb) cb.checked = true;
         }
+        
+        // Optional: Pre-fill the due date if you changed it in the past and saved it
+        if (row.dueDate) {
+            const dueInput = document.getElementById('due_' + row.task);
+            if (dueInput) dueInput.value = row.dueDate;
+        }
     });
     
     setLoader("hide");
+    
+    // Check overdue status after data is loaded and trigger Warning Popup
+    checkOverdue(true); 
+}
+
+// --- Unified Popup Handler ---
+function triggerPopup(icon, title, message, titleColor) {
+    document.getElementById("popupIcon").innerText = icon;
+    const titleEl = document.getElementById("popupTitle");
+    titleEl.innerText = title;
+    titleEl.style.color = titleColor;
+    document.getElementById("popupMessage").innerHTML = message;
+    document.getElementById("unifiedPopup").classList.add("active");
+}
+
+function closePopup(event) {
+    if (!event || event.target.id === 'unifiedPopup' || event.target.className === 'close-btn') {
+        document.getElementById("unifiedPopup").classList.remove("active");
+    }
 }
 
 const script = document.createElement("script");
