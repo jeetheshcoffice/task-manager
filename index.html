@@ -1,148 +1,275 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>Task Manager Month Wise</title>
 
+<!-- Modern Google Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Segoe UI,sans-serif;
+/* Base Setup */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
 }
 
-body{
-background:#f4f7fb;
-padding:30px;
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+    min-height: 100vh;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
 }
 
-.container{
-max-width:1200px;
-margin:auto;
+.container {
+    width: 100%;
+    max-width: 1100px;
 }
 
-.card{
-background:#fff;
-border-radius:15px;
-overflow:hidden;
-box-shadow:0 5px 20px rgba(0,0,0,.1);
+/* Card Styling */
+.card {
+    background: #ffffff;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(21, 34, 50, 0.08), 
+                0 1px 3px rgba(21, 34, 50, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
-.title{
-background:#1565ff;
-color:#fff;
-text-align:center;
-padding:20px;
-font-size:32px;
-font-weight:bold;
+/* Header/Title */
+.title {
+    background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+    color: #ffffff;
+    text-align: center;
+    padding: 30px 20px;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+    box-shadow: inset 0 -2px 10px rgba(0,0,0,0.05);
 }
 
-table{
-width:100%;
-border-collapse:collapse;
+/* Table Wrapper for Responsiveness */
+.table-responsive {
+    overflow-x: auto;
+    width: 100%;
 }
 
-th{
-background:#1cc7d0;
-padding:15px;
-border:1px solid #d6d6d6;
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
 }
 
-td{
-padding:15px;
-text-align:center;
-border:1px solid #d6d6d6;
+/* Table Headers */
+th {
+    background: #f8fafc;
+    color: #64748b;
+    padding: 18px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #edf2f7;
+    text-transform: uppercase;
 }
 
-td:first-child{
-font-weight:600;
-text-align:left;
+/* Table Body Cells */
+td {
+    padding: 18px 14px;
+    text-align: center;
+    border-bottom: 1px solid #edf2f7;
+    transition: background-color 0.2s ease;
 }
 
-input[type=checkbox]{
-width:24px;
-height:24px;
-cursor:pointer;
+tr:last-child td {
+    border-bottom: none;
 }
 
-.status{
-text-align:center;
-padding:15px;
-font-weight:bold;
-color:green;
+tr:hover td {
+    background-color: #f8fafc;
 }
 
+td:first-child {
+    font-weight: 600;
+    color: #1e293b;
+    text-align: left;
+    padding-left: 30px;
+    font-size: 15px;
+    letter-spacing: -0.2px;
+}
+
+/* Modern Animated Checkbox Wrapper */
+.checkbox-container {
+    display: inline-block;
+    position: relative;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+}
+
+/* Hide Default Checkbox */
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Custom Checkbox Design */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 26px;
+    width: 26px;
+    background-color: #fff;
+    border: 2px solid #cbd5e1;
+    border-radius: 8px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Hover State */
+.checkbox-container:hover input ~ .checkmark {
+    border-color: #3b82f6;
+    background-color: #f0f6ff;
+    transform: scale(1.05);
+}
+
+/* Checked State */
+.checkbox-container input:checked ~ .checkmark {
+    background-color: #10b981;
+    border-color: #10b981;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+/* SVG Icon Inside Checkmark */
+.checkmark svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: white;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transform: scale(0);
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.checkbox-container input:checked ~ .checkmark svg {
+    transform: scale(1);
+}
+
+/* Toast Status Message */
+.status {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #1e293b;
+    color: #fff;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 14px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.status.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.status-icon {
+    color: #10b981;
+    font-weight: bold;
+}
 </style>
 </head>
 
 <body>
 
 <div class="container">
+    <div class="card">
+        <div class="title">Task Manager</div>
 
-<div class="card">
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>June</th>
+                        <th>July</th>
+                        <th>August</th>
+                        <th>September</th>
+                        <th>October</th>
+                        <th>November</th>
+                        <th>December</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Row 1: NPS -->
+                    <tr>
+                        <td>NPS</td>
+                        <td><label class="checkbox-container"><input id="NPS_JUNE" type="checkbox" onchange="saveTask(this,'NPS','JUNE')"><span class="checkmark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></label></td>
+                        <td><label class="checkbox-container"><input id="NPS_JULY" type="checkbox" onchange="saveTask(this,'NPS','JULY')"><span class="checkmark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></label></td>
+                        <td><label class="checkbox-container"><input id="NPS_AUGUST" type="checkbox" onchange="saveTask(this,'NPS','AUGUST')"><span class="checkmark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></label></td>
+                        <td><label class="checkbox-container"><input id="NPS_SEPTEMBER" type="checkbox" onchange="saveTask(this,'NPS','SEPTEMBER')"><span class="checkmark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></label></td>
+                        <td><label class="checkbox-container"><input id="NPS_OCTOBER" type="checkbox" onchange="saveTask(this,'NPS','OCTOBER')"><span class="checkmark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></label></td>
+                        <td><label class="checkbox-container"><input id="NPS_NOVEMBER" type="checkbox" onchange="saveTask(this,'NPS','NOVEMBER')"><span class="checkmark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></label></td>
+                        <td><label class="checkbox-container"><input id="NPS_DECEMBER" type="checkbox" onchange="saveTask(this,'NPS','DECEMBER')"><span class="checkmark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></label></td>
+                    </tr>
 
-<div class="title">
-TASK MANAGER MONTH WISE
+                    <!-- Row 2: MEDISEP -->
+                    <tr>
+                        <td>MEDISEP</td>
+                        <td><label class="checkbox-container"><input id="MEDISEP_JUNE" type="checkbox" onchange="saveTask(this,'MEDISEP','JUNE')"><span class="checkmark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></label></td>
+                        <td><label class="checkbox-container"><input id="MEDISEP_JULY" type="checkbox" onchange="saveTask(this,'MEDISEP','JULY')"><span class="checkmark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></label></td>
+                        <td><label class="checkbox-container"><input id="MEDISEP_AUGUST" type="checkbox" onchange="saveTask(this,'MEDISEP','AUGUST')"><span class="checkmark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></label></td>
+                        <td><label class="checkbox-container"><input id="MEDISEP_SEPTEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','SEPTEMBER')"><span class="checkmark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></label></td>
+                        <td><label class="checkbox-container"><input id="MEDISEP_OCTOBER" type="checkbox" onchange="saveTask(this,'MEDISEP','OCTOBER')"><span class="checkmark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></label></td>
+                        <td><label class="checkbox-container"><input id="MEDISEP_NOVEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','NOVEMBER')"><span class="checkmark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></label></td>
+                        <td><label class="checkbox-container"><input id="MEDISEP_DECEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','DECEMBER')"><span class="checkmark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></label></td>
+                    </tr>
+
+                    <!-- Row 3: KPEPF -->
+                    <tr>
+                        <td>KPEPF</td>
+                        <td><label class="checkbox-container"><input id="KPEPF_JUNE" type="checkbox" onchange="saveTask(this,'KPEPF','JUNE')"><span class="checkmark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></label></td>
+                        <td><label class="checkbox-container"><input id="KPEPF_JULY" type="checkbox" onchange="saveTask(this,'KPEPF','JULY')"><span class="checkmark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></label></td>
+                        <td><label class="checkbox-container"><input id="KPEPF_AUGUST" type="checkbox" onchange="saveTask(this,'KPEPF','AUGUST')"><span class="checkmark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></label></td>
+                        <td><label class="checkbox-container"><input id="KPEPF_SEPTEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','SEPTEMBER')"><span class="checkmark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></label></td>
+                        <td><label class="checkbox-container"><input id="KPEPF_OCTOBER" type="checkbox" onchange="saveTask(this,'KPEPF','OCTOBER')"><span class="checkmark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></label></td>
+                        <td><label class="checkbox-container"><input id="KPEPF_NOVEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','NOVEMBER')"><span class="checkmark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></label></td>
+                        <td><label class="checkbox-container"><input id="KPEPF_DECEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','DECEMBER')"><span class="checkmark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></label></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
-<table>
-
-<tr>
-<th>TASK</th>
-<th>JUNE</th>
-<th>JULY</th>
-<th>AUGUST</th>
-<th>SEPTEMBER</th>
-<th>OCTOBER</th>
-<th>NOVEMBER</th>
-<th>DECEMBER</th>
-</tr>
-
-<tr>
-<td>NPS</td>
-
-<td><input id="NPS_JUNE" type="checkbox" onchange="saveTask(this,'NPS','JUNE')"></td>
-<td><input id="NPS_JULY" type="checkbox" onchange="saveTask(this,'NPS','JULY')"></td>
-<td><input id="NPS_AUGUST" type="checkbox" onchange="saveTask(this,'NPS','AUGUST')"></td>
-<td><input id="NPS_SEPTEMBER" type="checkbox" onchange="saveTask(this,'NPS','SEPTEMBER')"></td>
-<td><input id="NPS_OCTOBER" type="checkbox" onchange="saveTask(this,'NPS','OCTOBER')"></td>
-<td><input id="NPS_NOVEMBER" type="checkbox" onchange="saveTask(this,'NPS','NOVEMBER')"></td>
-<td><input id="NPS_DECEMBER" type="checkbox" onchange="saveTask(this,'NPS','DECEMBER')"></td>
-</tr>
-
-<tr>
-<td>MEDISEP</td>
-
-<td><input id="MEDISEP_JUNE" type="checkbox" onchange="saveTask(this,'MEDISEP','JUNE')"></td>
-<td><input id="MEDISEP_JULY" type="checkbox" onchange="saveTask(this,'MEDISEP','JULY')"></td>
-<td><input id="MEDISEP_AUGUST" type="checkbox" onchange="saveTask(this,'MEDISEP','AUGUST')"></td>
-<td><input id="MEDISEP_SEPTEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','SEPTEMBER')"></td>
-<td><input id="MEDISEP_OCTOBER" type="checkbox" onchange="saveTask(this,'MEDISEP','OCTOBER')"></td>
-<td><input id="MEDISEP_NOVEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','NOVEMBER')"></td>
-<td><input id="MEDISEP_DECEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','DECEMBER')"></td>
-</tr>
-
-<tr>
-<td>KPEPF</td>
-
-<td><input id="KPEPF_JUNE" type="checkbox" onchange="saveTask(this,'KPEPF','JUNE')"></td>
-<td><input id="KPEPF_JULY" type="checkbox" onchange="saveTask(this,'KPEPF','JULY')"></td>
-<td><input id="KPEPF_AUGUST" type="checkbox" onchange="saveTask(this,'KPEPF','AUGUST')"></td>
-<td><input id="KPEPF_SEPTEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','SEPTEMBER')"></td>
-<td><input id="KPEPF_OCTOBER" type="checkbox" onchange="saveTask(this,'KPEPF','OCTOBER')"></td>
-<td><input id="KPEPF_NOVEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','NOVEMBER')"></td>
-<td><input id="KPEPF_DECEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','DECEMBER')"></td>
-</tr>
-
-</table>
-
-<div id="status" class="status"></div>
-
-</div>
+<!-- Modern Toast Style Alert Box -->
+<div id="status" class="status">
+    <span class="status-icon">✓</span> Saved Successfully
 </div>
 
 <form
@@ -172,12 +299,13 @@ new Date().toLocaleString();
 
 document.getElementById("sheetForm").submit();
 
-document.getElementById("status").innerHTML=
-"✓ Saved Successfully";
+// Elegant Slide-in notification instead of text replacement
+const statusToast = document.getElementById("status");
+statusToast.classList.add("show");
 
 setTimeout(()=>{
-document.getElementById("status").innerHTML="";
-},2000);
+statusToast.classList.remove("show");
+},2500);
 
 }
 
