@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Task Manager - Manjeshwar Grama Panchayat</title>
 
-<!-- Enterprise & Professional Font -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -22,7 +21,7 @@ body {
     background-size: 20px 20px;
     color: #0f172a;
     min-height: 100vh;
-    padding: 60px 20px 40px; /* Top padding to accommodate loader */
+    padding: 60px 20px 40px; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -167,7 +166,6 @@ td:first-child {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
 }
 
 /* --------------------------------------
@@ -206,31 +204,6 @@ input[type=checkbox]:checked:after {
     font-size: 16px;
 }
 
-/* Calendar Icon */
-.date-icon {
-    display: none;
-    cursor: pointer;
-    font-size: 18px;
-    user-select: none;
-    transition: transform 0.2s;
-    opacity: 0.8;
-}
-
-.date-icon:hover {
-    transform: scale(1.15);
-    opacity: 1;
-}
-
-input[type=checkbox]:checked + .date-icon {
-    display: inline-block;
-    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-@keyframes popIn {
-    0% { transform: scale(0.5); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
 .status {
     padding: 15px;
     text-align: center;
@@ -239,68 +212,10 @@ input[type=checkbox]:checked + .date-icon {
     color: #059669;
     height: 55px;
 }
-
-/* --------------------------------------
-   PROFESSIONAL LIGHT MODAL
---------------------------------------- */
-.popup-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(15, 23, 42, 0.5);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: 0.3s ease;
-    z-index: 1000;
-}
-
-.popup-overlay.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-.popup-content {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    padding: 40px;
-    border-radius: 16px;
-    text-align: center;
-    color: #0f172a;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-    transform: translateY(20px) scale(0.95);
-    transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative;
-    max-width: 400px;
-    width: 90%;
-}
-
-.popup-overlay.active .popup-content {
-    transform: translateY(0) scale(1);
-}
-
-.close-btn {
-    position: absolute;
-    top: 15px; right: 20px;
-    font-size: 26px;
-    cursor: pointer;
-    color: #94a3b8;
-    transition: 0.2s;
-}
-
-.close-btn:hover { color: #0f172a; }
-.popup-icon { font-size: 45px; margin-bottom: 15px; }
-.popup-content h3 { margin-bottom: 12px; font-weight: 700; font-size: 22px; color: #1e3a8a;}
-.popup-content p { font-size: 15px; color: #475569; line-height: 1.6; font-weight: 400;}
-
 </style>
 </head>
 <body>
 
-<!-- SYSTEM LOADER -->
 <div id="topLoader">
     <div class="spinner"></div>
     <span id="loaderText">Loading Database...</span>
@@ -327,43 +242,40 @@ input[type=checkbox]:checked + .date-icon {
                 <th>DECEMBER</th>
             </tr>
             
-            <!-- NPS ROW -->
             <tr>
                 <td>NPS</td>
                 <td><span class="due-badge">5th</span></td>
-                <td><div class="cell-wrapper"><input id="NPS_JUNE" type="checkbox" onchange="saveTask(this,'NPS','JUNE')"><span class="date-icon" id="date_NPS_JUNE" onclick="showDate(this)" title="View Date">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_JULY" type="checkbox" onchange="saveTask(this,'NPS','JULY')"><span class="date-icon" id="date_NPS_JULY" onclick="showDate(this)" title="View Date">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_AUGUST" type="checkbox" onchange="saveTask(this,'NPS','AUGUST')"><span class="date-icon" id="date_NPS_AUGUST" onclick="showDate(this)" title="View Date">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_SEPTEMBER" type="checkbox" onchange="saveTask(this,'NPS','SEPTEMBER')"><span class="date-icon" id="date_NPS_SEPTEMBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_OCTOBER" type="checkbox" onchange="saveTask(this,'NPS','OCTOBER')"><span class="date-icon" id="date_NPS_OCTOBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_NOVEMBER" type="checkbox" onchange="saveTask(this,'NPS','NOVEMBER')"><span class="date-icon" id="date_NPS_NOVEMBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_DECEMBER" type="checkbox" onchange="saveTask(this,'NPS','DECEMBER')"><span class="date-icon" id="date_NPS_DECEMBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
+                <td><div class="cell-wrapper"><input id="NPS_JUNE" type="checkbox" onchange="saveTask(this,'NPS','JUNE')"></div></td>
+                <td><div class="cell-wrapper"><input id="NPS_JULY" type="checkbox" onchange="saveTask(this,'NPS','JULY')"></div></td>
+                <td><div class="cell-wrapper"><input id="NPS_AUGUST" type="checkbox" onchange="saveTask(this,'NPS','AUGUST')"></div></td>
+                <td><div class="cell-wrapper"><input id="NPS_SEPTEMBER" type="checkbox" onchange="saveTask(this,'NPS','SEPTEMBER')"></div></td>
+                <td><div class="cell-wrapper"><input id="NPS_OCTOBER" type="checkbox" onchange="saveTask(this,'NPS','OCTOBER')"></div></td>
+                <td><div class="cell-wrapper"><input id="NPS_NOVEMBER" type="checkbox" onchange="saveTask(this,'NPS','NOVEMBER')"></div></td>
+                <td><div class="cell-wrapper"><input id="NPS_DECEMBER" type="checkbox" onchange="saveTask(this,'NPS','DECEMBER')"></div></td>
             </tr>
             
-            <!-- MEDISEP ROW -->
             <tr>
                 <td>MEDISEP</td>
                 <td><span class="due-badge">5th</span></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_JUNE" type="checkbox" onchange="saveTask(this,'MEDISEP','JUNE')"><span class="date-icon" id="date_MEDISEP_JUNE" onclick="showDate(this)" title="View Date">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_JULY" type="checkbox" onchange="saveTask(this,'MEDISEP','JULY')"><span class="date-icon" id="date_MEDISEP_JULY" onclick="showDate(this)" title="View Date">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_AUGUST" type="checkbox" onchange="saveTask(this,'MEDISEP','AUGUST')"><span class="date-icon" id="date_MEDISEP_AUGUST" onclick="showDate(this)" title="View Date">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_SEPTEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','SEPTEMBER')"><span class="date-icon" id="date_MEDISEP_SEPTEMBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_OCTOBER" type="checkbox" onchange="saveTask(this,'MEDISEP','OCTOBER')"><span class="date-icon" id="date_MEDISEP_OCTOBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_NOVEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','NOVEMBER')"><span class="date-icon" id="date_MEDISEP_NOVEMBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_DECEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','DECEMBER')"><span class="date-icon" id="date_MEDISEP_DECEMBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
+                <td><div class="cell-wrapper"><input id="MEDISEP_JUNE" type="checkbox" onchange="saveTask(this,'MEDISEP','JUNE')"></div></td>
+                <td><div class="cell-wrapper"><input id="MEDISEP_JULY" type="checkbox" onchange="saveTask(this,'MEDISEP','JULY')"></div></td>
+                <td><div class="cell-wrapper"><input id="MEDISEP_AUGUST" type="checkbox" onchange="saveTask(this,'MEDISEP','AUGUST')"></div></td>
+                <td><div class="cell-wrapper"><input id="MEDISEP_SEPTEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','SEPTEMBER')"></div></td>
+                <td><div class="cell-wrapper"><input id="MEDISEP_OCTOBER" type="checkbox" onchange="saveTask(this,'MEDISEP','OCTOBER')"></div></td>
+                <td><div class="cell-wrapper"><input id="MEDISEP_NOVEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','NOVEMBER')"></div></td>
+                <td><div class="cell-wrapper"><input id="MEDISEP_DECEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','DECEMBER')"></div></td>
             </tr>
             
-            <!-- KPEPF ROW -->
             <tr>
                 <td>KPEPF</td>
                 <td><span class="due-badge">5th</span></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_JUNE" type="checkbox" onchange="saveTask(this,'KPEPF','JUNE')"><span class="date-icon" id="date_KPEPF_JUNE" onclick="showDate(this)" title="View Date">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_JULY" type="checkbox" onchange="saveTask(this,'KPEPF','JULY')"><span class="date-icon" id="date_KPEPF_JULY" onclick="showDate(this)" title="View Date">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_AUGUST" type="checkbox" onchange="saveTask(this,'KPEPF','AUGUST')"><span class="date-icon" id="date_KPEPF_AUGUST" onclick="showDate(this)" title="View Date">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_SEPTEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','SEPTEMBER')"><span class="date-icon" id="date_KPEPF_SEPTEMBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_OCTOBER" type="checkbox" onchange="saveTask(this,'KPEPF','OCTOBER')"><span class="date-icon" id="date_KPEPF_OCTOBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_NOVEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','NOVEMBER')"><span class="date-icon" id="date_KPEPF_NOVEMBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_DECEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','DECEMBER')"><span class="date-icon" id="date_KPEPF_DECEMBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
+                <td><div class="cell-wrapper"><input id="KPEPF_JUNE" type="checkbox" onchange="saveTask(this,'KPEPF','JUNE')"></div></td>
+                <td><div class="cell-wrapper"><input id="KPEPF_JULY" type="checkbox" onchange="saveTask(this,'KPEPF','JULY')"></div></td>
+                <td><div class="cell-wrapper"><input id="KPEPF_AUGUST" type="checkbox" onchange="saveTask(this,'KPEPF','AUGUST')"></div></td>
+                <td><div class="cell-wrapper"><input id="KPEPF_SEPTEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','SEPTEMBER')"></div></td>
+                <td><div class="cell-wrapper"><input id="KPEPF_OCTOBER" type="checkbox" onchange="saveTask(this,'KPEPF','OCTOBER')"></div></td>
+                <td><div class="cell-wrapper"><input id="KPEPF_NOVEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','NOVEMBER')"></div></td>
+                <td><div class="cell-wrapper"><input id="KPEPF_DECEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','DECEMBER')"></div></td>
             </tr>
         </table>
         
@@ -371,17 +283,6 @@ input[type=checkbox]:checked + .date-icon {
     </div>
 </div>
 
-<!-- Professional Popup Modal -->
-<div id="datePopup" class="popup-overlay" onclick="closePopup(event)">
-    <div class="popup-content">
-        <span class="close-btn" onclick="closePopup()">&times;</span>
-        <div class="popup-icon">✅</div>
-        <h3 id="popupTitle">Task Verified</h3>
-        <p id="popupMessage">Loading date...</p>
-    </div>
-</div>
-
-<!-- Google Apps Script Form Submission -->
 <form id="sheetForm" action="https://script.google.com/macros/s/AKfycbwL6wpOUEIXVO_i_1EHdiT3f-8Fpn2R4mu5omqHCZYV4dpAewFPyWjOg2l7aSnAxvXuuw/exec" method="POST" target="hiddenFrame">
     <input type="hidden" name="task" id="task">
     <input type="hidden" name="month" id="month">
@@ -389,7 +290,6 @@ input[type=checkbox]:checked + .date-icon {
     <input type="hidden" name="date" id="date">
 </form>
 
-<!-- ADDED ONLOAD LISTENER TO IFRAME -->
 <iframe name="hiddenFrame" id="hiddenFrame" style="display:none" onload="handleIframeLoad()"></iframe>
 
 <script>
@@ -406,37 +306,23 @@ function setLoader(state, text = "") {
     }
 }
 
-// Show loader instantly when page opens
 setLoader("show", "Connecting to Database...");
 
 // --- Task Saving Logic ---
-let isSubmitting = false; // Safely track if we are actually syncing
+let isSubmitting = false; 
 
 function saveTask(box, task, month){
-    const elementId = task + "_" + month;
-    const icon = document.getElementById("date_" + elementId);
-    
-    // Formatting a cleaner date string
-    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-    const timestamp = new Date().toLocaleDateString('en-US', options);
+    const timestamp = new Date().toLocaleString();
 
     document.getElementById("task").value = task;
     document.getElementById("month").value = month;
     document.getElementById("statusField").value = box.checked;
     document.getElementById("date").value = timestamp;
 
-    if (box.checked && icon) {
-        icon.setAttribute("data-date", timestamp);
-    } else if (icon) {
-        icon.removeAttribute("data-date");
-    }
-
-    // Trigger Loading UI
     isSubmitting = true;
     setLoader("show", "Syncing Update...");
     document.getElementById("sheetForm").submit();
 
-    // FAILSAFE: If the browser blocks the iframe onload event, close it after 2.5 seconds anyway
     setTimeout(() => {
         if (isSubmitting) {
             completeSync();
@@ -444,7 +330,6 @@ function saveTask(box, task, month){
     }, 2500);
 }
 
-// --- Iframe Completion Trigger ---
 function handleIframeLoad() {
     if (isSubmitting) {
         completeSync();
@@ -453,11 +338,10 @@ function handleIframeLoad() {
 
 function completeSync() {
     isSubmitting = false;
-    setLoader("hide"); // Hide the drop-down loader
+    setLoader("hide"); 
     
     const statusDiv = document.getElementById("status");
     statusDiv.innerHTML = "✓ Securely Synced to Database";
-    statusDiv.style.opacity = 1;
     
     setTimeout(() => {
         statusDiv.innerHTML = "";
@@ -470,66 +354,13 @@ function loadSavedData(data){
         if(String(row.status).toUpperCase() == "TRUE"){
             const id = row.task + "_" + row.month;
             const cb = document.getElementById(id);
-            const icon = document.getElementById("date_" + id);
-
             if(cb) cb.checked = true;
-            if(icon && row.date) icon.setAttribute("data-date", row.date);
         }
     });
     
-    // Data has finished loading, remove the loader!
     setLoader("hide");
 }
 
-// --- Smooth Popup Logic (Upgraded for Legacy Data) ---
-function showDate(icon) {
-    const savedDate = icon.getAttribute("data-date");
-    const popup = document.getElementById("datePopup");
-    const title = document.getElementById("popupTitle");
-    const message = document.getElementById("popupMessage");
-    
-    // Find the checkbox that belongs to this specific calendar icon
-    const relatedCheckboxId = icon.id.replace("date_", "");
-    const checkbox = document.getElementById(relatedCheckboxId);
-    
-    if (savedDate && savedDate.trim() !== "") {
-        // SCENARIO 1: We have a valid date saved
-        
-        // Let's format the Google Sheets date to look clean just in case
-        let displayDate = savedDate;
-        try {
-            const d = new Date(savedDate);
-            if (!isNaN(d.getTime())) {
-                const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-                displayDate = d.toLocaleDateString('en-US', options);
-            }
-        } catch(e) {}
-
-        title.innerText = "Task Verified";
-        message.innerHTML = `This task was securely recorded on:<br><br><strong style="color:#0f172a; font-size: 16px;">${displayDate}</strong>`;
-        
-    } else if (checkbox && checkbox.checked && !isSubmitting) {
-        // SCENARIO 2: Box is checked, system is NOT syncing, but date is missing
-        // This means it is an old record from before the update!
-        title.innerText = "Legacy Record";
-        message.innerHTML = `This task was completed before the date-tracking feature was installed.<br><br><span style="font-size: 13px; color: #64748b;">To update this, uncheck and re-check the box to assign today's date.</span>`;
-        
-    } else {
-        // SCENARIO 3: System is currently sending/receiving data
-        title.innerText = "Syncing Record...";
-        message.innerText = "Data is currently syncing with the secure server. Please wait a moment.";
-    }
-    
-    popup.classList.add("active");
-}
-
-function closePopup(event) {
-    if (!event || event.target.id === 'datePopup' || event.target.className === 'close-btn') {
-        document.getElementById("datePopup").classList.remove("active");
-    }
-}
-
-// Inject Script to fetch data from Google Apps Script
 const script = document.createElement("script");
 script.src = "https://script.google.com/macros/s/AKfycbwL6wpOUEIXVO_i_1EHdiT3f-8Fpn2R4mu5omqHCZYV4dpAewFPyWjOg2l7aSnAxvXuuw/exec?callback=loadSavedData";
 document.body.appendChild(script);
